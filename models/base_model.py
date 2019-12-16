@@ -40,7 +40,7 @@ class BaseModel:
             type(self).__name__, self.id, self.__dict__)
 
     def __repr__(self):
-        """return a string representaion
+        """return a string representation
         """
         return self.__str__()
 

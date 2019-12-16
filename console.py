@@ -42,8 +42,42 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
+            """obj = eval("{}()".format(my_list[0]))"""
             obj = eval("{}()".format(my_list[0]))
             obj.save()
+            objects = storage.all()
+            key = my_list[0] + '.' + obj.id
+            v = objects[key]
+            for item in my_list[1:]:
+                flag_insert = True
+                sublist = item.split("=")
+                if sublist[1][0] == '"' and sublist[1][-1] == '"':
+                    sublist[1] = sublist[1].replace('_', ' ')
+                    aux_sublist = sublist[1][1:-1]
+                    for idx, character in enumerate(aux_sublist):
+                        if character == '"':
+                            if idx != 0 and aux_sublist[idx - 1] == '\\':
+                                continue
+                            else:
+                                flag_insert = False
+                                break
+                    sublist[1] = aux_sublist
+
+                else:
+                    if '.' in sublist[1]:
+                        try:
+                            sublist[1] = float(sublist[1])
+                        except:
+                            flag_insert = False
+                    else:
+                        try:
+                            sublist[1] = int(sublist[1])
+                        except:
+                            flag_insert = False
+                if flag_insert:
+                    v.__dict__[sublist[0]] = sublist[1]
+            v.save()
+
             print("{}".format(obj.id))
         except SyntaxError:
             print("** class name missing **")
@@ -210,15 +244,15 @@ class HBNBCommand(cmd.Cmd):
         new_list.append(args[0])
         try:
             my_dict = eval(
-                args[1][args[1].find('{'):args[1].find('}')+1])
+                args[1][args[1].find('{'):args[1].find('}') + 1])
         except Exception:
             my_dict = None
         if isinstance(my_dict, dict):
-            new_str = args[1][args[1].find('(')+1:args[1].find(')')]
+            new_str = args[1][args[1].find('(') + 1:args[1].find(')')]
             new_list.append(((new_str.split(", "))[0]).strip('"'))
             new_list.append(my_dict)
             return new_list
-        new_str = args[1][args[1].find('(')+1:args[1].find(')')]
+        new_str = args[1][args[1].find('(') + 1:args[1].find(')')]
         new_list.append(" ".join(new_str.split(", ")))
         return " ".join(i for i in new_list)
 
