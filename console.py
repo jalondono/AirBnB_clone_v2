@@ -77,7 +77,6 @@ class HBNBCommand(cmd.Cmd):
                 if flag_insert:
                     v.__dict__[sublist[0]] = sublist[1]
             v.save()
-
             print("{}".format(obj.id))
         except SyntaxError:
             print("** class name missing **")
