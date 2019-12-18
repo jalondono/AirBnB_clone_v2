@@ -60,7 +60,7 @@ class BaseModel:
         models.storage.save()
 
     def to_dict(self):
-        """creates dictionary of the class  and returns
+        """creates dictionary of the class and returns
         Return:
             returns a dictionary of all the key values in __dict__
         """
@@ -68,8 +68,10 @@ class BaseModel:
         my_dict["__class__"] = str(type(self).__name__)
         my_dict["created_at"] = self.created_at.isoformat()
         my_dict["updated_at"] = self.updated_at.isoformat()
-        if '_sa_instance_state' in my_dict.keys():
-            del my_dict['_sa_instance_state']
+        try:
+            del my_dict["_sa_instance_state"]
+        except:
+            pass
         return my_dict
 
     def delete(self):
