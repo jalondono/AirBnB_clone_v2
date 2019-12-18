@@ -2,10 +2,17 @@
 """This is the place class"""
 import os
 from models.review import Review
+from models.amenity import Amenity
 from models.base_model import BaseModel, Base
-from sqlalchemy import Column, String, Integer, Float, ForeignKey
+from sqlalchemy import Column, String, Integer, Float, ForeignKey, Table
 from sqlalchemy.orm import relationship
 import models
+
+place_amenity = Table(
+    'place_amenity', Base.metadata,
+    Column('place_id', String(60), ForeignKey('places.id')),
+    Column('amenity_id', String(60), ForeignKey('amenities.id'))
+)
 
 
 class Place(BaseModel, Base):
@@ -38,6 +45,7 @@ class Place(BaseModel, Base):
 
     if os.environ.get('HBNB_TYPE_STORAGE') == 'db':
         reviews = relationship("Review", backref="places", cascade="delete")
+        amenities = relationship("Amenity", secondary=place_amenity, backref="places", viewonly=False)
     else:
         @property
         def reviews(self):
@@ -48,3 +56,21 @@ class Place(BaseModel, Base):
                 if review.place_id == self.id:
                     reviews_relation = reviews_relation.append(review)
             return reviews_relation
+
+        @property
+        def amenities(self):
+            """FileStorage relationship between Place and Amenity"""
+            amenities = models.storage.all(Amenity)
+            amenities_relation = []
+            for amenity in amenities.values():
+                if amenity.id in self.amenity_ids:
+                    amenities_relation = amenities_relation.append(amenity)
+            return amenities_relation
+
+        @amenities.setter
+        def amenities(self, a_id):
+            """Add an amenity id for a place"""
+            amenities = models.storage.all(Amenity)
+            for amenity in amenities.values():
+                if amenity.id == a_id:
+                    self.amenity_ids.append(a_id)
