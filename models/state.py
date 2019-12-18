@@ -21,7 +21,7 @@ class State(BaseModel, Base):
     else:
         @property
         def cities(self):
-            '''FileStorage relationship between State and City '''
+            """FileStorage relationship between State and City """
             cities = models.storage.all(City)
             cities_relation = []
             for city in cities.values():
