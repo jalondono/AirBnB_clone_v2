@@ -40,7 +40,7 @@ class DBStorage:
 
     def all(self, cls=None):
         """"""
-        all_classes = ["State", "City"]
+        all_classes = ["State", "City", "User"]
         obj_dict = {}
         if cls is None:
             for class_name in all_classes:
