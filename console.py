@@ -42,12 +42,7 @@ class HBNBCommand(cmd.Cmd):
             if not line:
                 raise SyntaxError()
             my_list = line.split(" ")
-            """obj = eval("{}()".format(my_list[0]))"""
             obj = eval("{}()".format(my_list[0]))
-            obj.save()
-            objects = storage.all()
-            key = my_list[0] + '.' + obj.id
-            v = objects[key]
             for item in my_list[1:]:
                 flag_insert = True
                 sublist = item.split("=")
@@ -75,8 +70,8 @@ class HBNBCommand(cmd.Cmd):
                         except:
                             flag_insert = False
                 if flag_insert:
-                    v.__dict__[sublist[0]] = sublist[1]
-            v.save()
+                    obj.__dict__[sublist[0]] = sublist[1]
+            obj.save()
             print("{}".format(obj.id))
         except SyntaxError:
             print("** class name missing **")
