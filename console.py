@@ -11,6 +11,7 @@ from models.amenity import Amenity
 from models.place import Place
 from models.review import Review
 from shlex import split
+import copy
 
 
 class HBNBCommand(cmd.Cmd):
@@ -44,10 +45,11 @@ class HBNBCommand(cmd.Cmd):
             my_list = line.split(" ")
             """obj = eval("{}()".format(my_list[0]))"""
             obj = eval("{}()".format(my_list[0]))
-            obj.save()
+            """obj.save()
             objects = storage.all()
+            """
             key = my_list[0] + '.' + obj.id
-            v = objects[key]
+            v = obj
             for item in my_list[1:]:
                 flag_insert = True
                 sublist = item.split("=")
@@ -152,10 +154,18 @@ class HBNBCommand(cmd.Cmd):
             NameError: when there is no object that has the name
         """
         objects = storage.all()
+        copy_objs = copy.deepcopy(objects)
         my_list = []
+        dict_from_objet = {}
         if not line:
-            for key in objects:
+            """for key in objects:
                 my_list.append(objects[key])
+            """
+            for key, obj in copy_objs.items():
+                aux_obj = obj.__dict__
+                del aux_obj['_sa_instance_state']
+            for key_1 in copy_objs:
+                my_list.append(copy_objs[key_1])
             print(my_list)
             return
         try:
