@@ -156,7 +156,10 @@ class HBNBCommand(cmd.Cmd):
             """
             for key, obj in copy_objs.items():
                 aux_obj = obj.__dict__
-                del aux_obj['_sa_instance_state']
+                try:
+                    del aux_obj['_sa_instance_state']
+                except:
+                    pass
             for key_1 in copy_objs:
                 my_list.append(copy_objs[key_1])
             print(my_list)

@@ -12,5 +12,3 @@ class State(BaseModel, Base):
     """
     __tablename__ = "states"
     name = Column(String(128), nullable=False)
-
-    if os.__name__
