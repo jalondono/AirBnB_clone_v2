@@ -156,7 +156,6 @@ class HBNBCommand(cmd.Cmd):
         objects = storage.all()
         copy_objs = copy.deepcopy(objects)
         my_list = []
-        dict_from_objet = {}
         if not line:
             """for key in objects:
                 my_list.append(objects[key])
