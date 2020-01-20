@@ -19,5 +19,12 @@ def print_2():
     return 'HBNB'
 
 
+@app.route("/c/<text>", strict_slashes=False)
+def print_directory(text):
+    """print  a directory"""
+    aux_text = text.replace('_', ' ')
+    return "C {}".format(aux_text)
+
+
 if __name__ == '__main__':
     app.run()
