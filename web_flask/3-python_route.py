@@ -26,5 +26,15 @@ def print_c(text):
     return "C {}".format(aux_text)
 
 
+@app.route("/python/", defaults={'text': 'is cool'}, strict_slashes=False)
+@app.route("/python/<text>")
+def print_python(text):
+    """display “Python ”, followed by the value
+    of the text variable
+    (replace underscore _ symbols with a space"""
+    aux_text = text.replace('_', ' ')
+    return "Python {}".format(aux_text)
+
+
 if __name__ == '__main__':
     app.run()
