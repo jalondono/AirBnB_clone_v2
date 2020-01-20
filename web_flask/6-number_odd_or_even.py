@@ -46,5 +46,30 @@ def print_number(n):
         return "{:d} is a number".format(n)
 
 
+@app.route("/number_template/<int:n>", strict_slashes=False)
+def insert_num_html(n):
+    """display “Python ”, followed by the value
+    of the text variable
+    (replace underscore _ symbols with a space"""
+    if type(n) is int:
+        return render_template('5-number.html', n=n)
+
+
+@app.route("/number_odd_or_even/<int:n>", strict_slashes=False)
+def odd_or_even(n):
+    """
+    display “Python , followed by the value
+    of the text variable
+    :param n:
+    :return:
+    """
+    if type(n) is int:
+        if n % 2 == 0:
+            type_number = 'even'
+        else:
+            type_number = 'odd'
+        return render_template("6-number_odd_or_even", n=n, type=type_number)
+
+
 if __name__ == '__main__':
     app.run()

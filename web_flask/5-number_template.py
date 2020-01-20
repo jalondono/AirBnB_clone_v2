@@ -46,5 +46,14 @@ def print_number(n):
         return "{:d} is a number".format(n)
 
 
+@app.route("/number_template/<int:n>", strict_slashes=False)
+def insert_num_html(n):
+    """display “Python ”, followed by the value
+    of the text variable
+    (replace underscore _ symbols with a space"""
+    if type(n) is int:
+        return render_template('5-number.html', n=n)
+
+
 if __name__ == '__main__':
     app.run()
