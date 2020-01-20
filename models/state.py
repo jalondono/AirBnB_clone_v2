@@ -27,5 +27,5 @@ class State(BaseModel, Base):
             cities_relation = []
             for city in cities.values():
                 if city.state_id == self.id:
-                    cities_relation = cities_relation.append(city)
+                    cities_relation.append(city)
             return cities_relation
