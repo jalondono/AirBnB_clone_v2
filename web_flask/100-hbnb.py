@@ -48,5 +48,23 @@ def states_by_id(id=None):
     return render_template('9-states.html')
 
 
+@app.route('/hbnb_filters', strict_slashes=False)
+def filters():
+    all_states = storage.all('State')
+    all_amenities = storage.all('Amenity')
+    return render_template('10-hbnb_filters.html',
+                           states=all_states, amenities=all_amenities)
+
+
+@app.route('/hbnb', strict_slashes=False)
+def hbnh():
+    all_states = storage.all('State')
+    all_amenities = storage.all('Amenity')
+    all_places = storage.all('Place')
+    return render_template('100-hbnb.html',
+                           states=all_states,
+                           amenities=all_amenities, places=all_places)
+
+
 if __name__ == '__main__':
     app.run()
