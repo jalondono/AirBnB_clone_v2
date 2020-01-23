@@ -60,7 +60,7 @@
                     <div class="number_bathrooms">{{ place.number_bathrooms }}</div>
               </div>
               <div class="user">
-                    <b>Owner:</b> Kevin Yook
+                    <b>Owner:</b> {{ place.users.first_name }} {{ place.users.last_name  }}
                   </div>
                   <div class="description">
                       {% autoescape false %}
